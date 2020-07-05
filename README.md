@@ -8,4 +8,4 @@ npm install tmi.js
 install request library
 npm install axios 
 
-to run it, simply type node PastaChess.js but before doing that, read the comments
+to run it, simply type node PastaChess.js but before doing that, read the top comments inside the js file
