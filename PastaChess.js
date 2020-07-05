@@ -14,7 +14,7 @@
 const tmi = require('tmi.js'); // twitch API
 const axios = require('axios'); // request library
 const qs = require('querystring') // translating strings in request
-const personalToken = 'AjGaJ72ROB8n1UUV'; // lichess token (ChatPlaysChess)
+const personalToken = 'YOUR_LICHESS_TOKEN'; // lichess token
 var thegameid = '';
 var moveswhite = 0;
 var movesblack = 0;
