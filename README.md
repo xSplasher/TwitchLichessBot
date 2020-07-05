@@ -1,5 +1,7 @@
 # ChessBot
 
+you'll need to install nodejs (google that)
+
 install twitch library
 npm install tmi.js 
 
