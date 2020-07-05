@@ -69,7 +69,7 @@ const options = {
     },
     identity: {
         username: 'BOT',
-        password: 'oauth:h90s2204uxuhwmtn225ml1ihsrstgx', // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
+        password: 'oauth:PUT_YOUR_AUTH_KEY_HERE', // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
     },
     channels: [streamer],
 };
