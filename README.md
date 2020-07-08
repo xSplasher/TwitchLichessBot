@@ -72,7 +72,7 @@ enter moves in chat like this ```!a1a8``` ```!c1f4``` squares only.
 - __```!challengeme LichessUsernameToBeChallenged``` Make chat play a casual game against someone on Lichess (You or a viewer, could be anybody on lichess)__
   - requires ```!challon```
   - you have 10-13 seconds to accept the challenge otherwise you have to type !challon again and execute !challengeme
-  - if you want to change the game settings, like time control etc, check the function named ```Challenge```:__
+  - if you want to change the game settings, like time control etc, check the function named ```Challenge```:
     - Clock: change ```clock``` variable to the desired value in seconds.
     - Color: change ```playercolor``` variable to ```white``` ```black``` or ```random```
     - Increment: change ```icr``` variable to the desired value in seconds.
