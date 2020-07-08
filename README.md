@@ -92,7 +92,7 @@ enter moves in chat like this ```!a1a8``` ```!c1f4``` squares only.
     
 - __```!resign``` Resign the game currently playing__
    
-- __```!cont``` to Continue a game already playing (if you stop the bot in the middle game and want to continue)__
+- __```!cont``` to Continue a game already playing (if you stopped the bot in the middle game and want to continue)__
 
 - __```!showgameid``` Shows game id and link to spectate the game.__
     
