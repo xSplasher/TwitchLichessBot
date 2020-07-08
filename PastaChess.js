@@ -193,7 +193,7 @@ try {
         }
 
         if (message == "!showgameid") {
-            sayInChat('game id is: ' + thegameid);
+            sayInChat('game id is: ' + thegameid+' || link is: https://lichess.org/'+thegameid);
         }
 
         // if (message == "!state") {
