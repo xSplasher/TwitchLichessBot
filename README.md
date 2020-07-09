@@ -60,7 +60,7 @@ if everything works fine, you'll see ```Bot is Connected``` in your chat. otherw
 
 ### Quick Start
 
-in chat type ```!challon``` then ```!challengeme LichessUsernameToBeChallenged``` you have 10-13 seconds to accept the challenge. 
+in chat type ```!challon``` then ```!challengeme LichessUsernameToBeChallenged``` the challenged player has 10-13 seconds to accept the challenge. 
 
 to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 
@@ -78,7 +78,7 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 - __```!challengeme LichessUsernameToBeChallenged``` Make chat play a casual game against someone on Lichess__
   - requires executing ```!challon``` to work
   - accessible by chat if ```!challon``` was executed, so someone in chat can submit a challenge.
-  - you have 10-13 seconds to accept the challenge otherwise you have to type !challon again and execute !challengeme
+  - the challenged player has 10-13 seconds to accept the challenge otherwise you have to type !challon again and execute !challengeme
   - if you want to change the game settings, like time control etc, check the function named ```Challenge```:
     - Clock: change ```clock``` variable to the desired value in seconds.
     - Color: change ```playercolor``` variable to ```white``` ```black``` or ```random```
