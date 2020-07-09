@@ -1,9 +1,9 @@
-# ChessBot
-
 ## What is this ?
 a twitch bot that gives you the ability to play against your twitch chat on lichess.
 
 You (the streamer) will be playing on your Lichess account while Chat should be playing on another one.
+
+Chat is going to vote for moves, the most voted move is played by the bot.
 
 ## How can i play ?
 First you need to install some stuff to make it work:
@@ -57,7 +57,8 @@ if everything works fine, you'll see ```Bot is Connected``` in your chat. otherw
 ### Quick Start
 
 in chat type ```!challon``` then ```!challengeme LichessUsernameToBeChallenged``` you have 10-13 seconds to accept the challenge. 
-enter moves in chat like this ```!a1a8``` ```!c1f4``` squares only.
+
+to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 
 
 ### More Details
@@ -92,7 +93,7 @@ enter moves in chat like this ```!a1a8``` ```!c1f4``` squares only.
     
 - __```!resign``` Resign the game currently playing__
    
-- __```!cont``` to Continue a game already playing (if you stopped the bot in the middle game and want to continue)__
+- __```!cont``` to Continue a game already playing (if you stopped the bot in the middle of the game and want to continue)__
 
 - __```!showgameid``` Shows game id and link to spectate the game.__
     
