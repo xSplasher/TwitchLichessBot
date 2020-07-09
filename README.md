@@ -75,7 +75,7 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 
 - __```!challoff``` Make Challenge Off__
 
-- __```!challengeme LichessUsernameToBeChallenged``` Make chat play a casual game against someone on Lichess (You or a viewer, could be anybody on lichess)__
+- __```!challengeme LichessUsernameToBeChallenged``` Make chat play a casual game against someone on Lichess__
   - requires executing ```!challon``` to work
   - accessible by chat if ```!challon``` was executed, so someone in chat can submit a challenge.
   - you have 10-13 seconds to accept the challenge otherwise you have to type !challon again and execute !challengeme
