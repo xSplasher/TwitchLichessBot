@@ -25,7 +25,9 @@ First you need to install some stuff to make it work:
 
 3. Now we need to set some variables:
     1. Twitch account that the bot will use (you can use your main one).
-       - to give the bot control of your account we need a OAuth token, that you can get from [here](https://twitchapps.com/tmi/) (**DO NOT SHARE THIS TOKEN**)
+       - to give the bot control of your account we need a OAuth token, that you can get from [here](https://twitchapps.com/tmi/) 
+       
+       (**DO NOT SHARE THIS TOKEN**)
 
     2. Lichess account that the chat will play on (i recommand that you create a new account)
        - we need a personal token to give the bot permission to use the Lichess account, get the token from [here](https://lichess.org/account/oauth/token)
@@ -45,7 +47,9 @@ First you need to install some stuff to make it work:
    - search for a variable named ```streamer``` and replace its value with the desired twitch channel
 
 5. We need to tell the bot who can use the commands. to do that:
-   - search for an array named ```allowedToUseCommands``` and add twitch usernames of the people who can use the commands. (IMPORTANT: usernames are case sensitive: if your twitch username apppears as ```aTwitchUSERNAMELOL``` in chat you should type it the same way in the array. meaning if you instead add ```atwitchusernamelol``` to the array, this will not let you execute bot commands in chat, because the bot won't recognize your name).
+   - search for an array named ```allowedToUseCommands``` and add twitch usernames of the people who can use the commands. these people are going to be able to create a game or resign it, you should put your twitch username here and your mods, no more, unless you want chaos.
+   
+   (**IMPORTANT: usernames are case sensitive: if your twitch username apppears as ```aTwitchUSERNAMELOL``` in chat you should type it the same way in the array. meaning if you instead add ```atwitchusernamelol``` to the array, this will not let you execute bot commands in chat, because the bot won't recognize your name).**
 
 
 ## I Did everything above. Now wot ?
@@ -64,6 +68,7 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 ### More Details
 
 - __```!e2e4``` is how you vote, want to move the knight on g1 to f3 ? type ```!g1f3``` castle king side as white ? ```!e1g1```__
+  - accessible by chat only when it's chat's turn to play
 
 - __```!challon``` Make Challenge On__
   - after executing this everybody in chat can send a challenge
@@ -71,7 +76,8 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 - __```!challoff``` Make Challenge Off__
 
 - __```!challengeme LichessUsernameToBeChallenged``` Make chat play a casual game against someone on Lichess (You or a viewer, could be anybody on lichess)__
-  - requires ```!challon```
+  - requires executing ```!challon``` to work
+  - accessible by chat if ```!challon``` was executed, so someone in chat can submit a challenge.
   - you have 10-13 seconds to accept the challenge otherwise you have to type !challon again and execute !challengeme
   - if you want to change the game settings, like time control etc, check the function named ```Challenge```:
     - Clock: change ```clock``` variable to the desired value in seconds.
@@ -96,4 +102,5 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 - __```!cont``` to Continue a game already playing (if you stopped the bot in the middle of the game and want to continue)__
 
 - __```!showgameid``` Shows game id and link to spectate the game.__
+  - accessible by chat
     
