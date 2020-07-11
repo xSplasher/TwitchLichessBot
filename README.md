@@ -103,4 +103,5 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 
 - __```!showgameid``` Shows game id and link to spectate the game.__
   - accessible by chat
-    
+  
+- __```!move e1e2``` Forces a move to be played.__
