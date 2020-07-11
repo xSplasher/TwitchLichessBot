@@ -105,3 +105,5 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
   - accessible by chat
   
 - __```!move e1e2``` Forces a move to be played.__
+
+- __```!closepoll``` immediately closes the poll and plays the most voted move.__
