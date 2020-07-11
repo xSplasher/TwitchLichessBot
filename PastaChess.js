@@ -13,21 +13,20 @@
 
 const tmi = require('tmi.js'); // twitch API
 const axios = require('axios'); // request library
-const qs = require('querystring') // translating strings in request
+const qs = require('querystring'); // translating strings in request
 
 
 
-var allowedToUseCommands = ['xSplasher', 'ChatPlaysChess_TV'] // Users allowed to use Commands (case sensitive)
+var allowedToUseCommands = ['xSplasher', 'ChatPlaysChess_TV']; // Users allowed to use Commands (case sensitive)
 
 
 var streamer = 'xSplasher'; // what channel you want the bot to join
 
 
-var OAuthToken = 'oauth:PUT_YOUR_AUTH_KEY_HERE'// Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
+var OAuthToken = 'oauth:PUT_YOUR_AUTH_KEY_HERE'; // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
 
 
 const personalToken = 'YOUR_LICHESS_TOKEN'; // lichess token (ChatPlaysChess)
-
 
 
 
@@ -66,7 +65,7 @@ var isPlaying = false;
 var justStarted = false;
 var challengeon = false;
 
-var votes = [];
+var votes = {};
 var votersname = [];
 
 getongoinggameID();
@@ -83,7 +82,7 @@ const options = {
     },
     identity: {
         username: 'BOT',
-        password: OAuthToken, // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
+        password: OAuthToken,
     },
     channels: [streamer],
 };
@@ -97,6 +96,22 @@ client.on('connected', (address, port) => {
 });
 try {
     client.on('chat', (channel, user, message, self) => {
+
+
+        if (message.includes('!closepoll')) {
+            if (allowedToUseCommands.includes(user["display-name"])) {
+                if (message.length == 10) {
+                    if (isMoveBeingPlayed) {
+                        sayInChat('Poll closed!');
+                        clearTimeout(turnTimer);
+                        tellmethevote();
+                    }
+                }
+            }
+        }
+
+
+
 
         if (message.includes('!move')) {
             if (allowedToUseCommands.includes(user["display-name"])) {
@@ -464,7 +479,7 @@ function tellmethevote() {
         }
 
         makemove(xad);
-        votes = [];
+        votes = {};
         votersname = [];
         listofdoubles = [];
         howmanytimes = 0;
