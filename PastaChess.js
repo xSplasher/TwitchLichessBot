@@ -59,7 +59,6 @@ var isColorSet = false;
 var isCalledFromChallenge = false;
 var isbeingcalledfromGETCOLOR = false;
 var nomoves = false;
-var wrongMove = false;
 var isMoveBeingPlayed = false;
 var isPollOn = false;
 var isgamecreatedcalled = false;
@@ -242,15 +241,12 @@ try {
                             votes[ourmove] = 1;
                         }
 
-                        wrongMove = false;
 
                         sayInChat(user["display-name"] + ' voted for ' + ourmove);
                     }
 
 
                 } else {
-                    wrongMove = true;
-                    console.log("Typed a wrong move");
                 }
             }
         }
