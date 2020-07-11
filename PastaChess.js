@@ -14,7 +14,29 @@
 const tmi = require('tmi.js'); // twitch API
 const axios = require('axios'); // request library
 const qs = require('querystring') // translating strings in request
-const personalToken = 'YOUR_LICHESS_TOKEN'; // lichess token
+
+
+
+var allowedToUseCommands = ['xSplasher', 'ChatPlaysChess_TV'] // Users allowed to use Commands (case sensitive)
+
+
+var streamer = 'xSplasher'; // what channel you want the bot to join
+
+
+var OAuthToken = 'oauth:PUT_YOUR_AUTH_KEY_HERE'// Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
+
+
+const personalToken = 'YOUR_LICHESS_TOKEN'; // lichess token (ChatPlaysChess)
+
+
+
+
+
+
+
+
+
+
 var thegameid = '';
 var moveswhite = 0;
 var movesblack = 0;
@@ -22,19 +44,12 @@ var thevotedmove = '';
 var isMyTurn;
 var listofdoubles = [];
 var howmanytimes = 0;
-
-
-var allowedToUseCommands = ['xSplasher', 'ChatPlaysChess_TV'] // Users allowed to use Commands (case sensitive)
-
-
-var streamer = 'fortunachesscoach'; // what channel you want the bot to join
-
+var turnTimer;
+var isCalledFromForcedMove = false;
 
 var attemptsToPlay = 4;
 var attempts = 0;
 var color = '';
-
-
 var turnTime = 60000;
 
 
@@ -69,7 +84,7 @@ const options = {
     },
     identity: {
         username: 'BOT',
-        password: 'oauth:PUT_YOUR_AUTH_KEY_HERE', // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
+        password: OAuthToken, // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
     },
     channels: [streamer],
 };
@@ -84,9 +99,28 @@ client.on('connected', (address, port) => {
 try {
     client.on('chat', (channel, user, message, self) => {
 
+        if (message.includes('!move')) {
+            if (allowedToUseCommands.includes(user["display-name"])) {
+                if (message.length == 10) {
+
+                    if (isMoveBeingPlayed) {
+                        isCalledFromForcedMove = true;
+
+                        ourMove = message.substr(6, 4);
+                        
+                        makemove(ourMove);
+
+                    }
+                    else{
+                        sayInChat("it's not our turn yet");
+                    }                    
+                }                               
+            }
+        }
+
         if (message == '!resign') {
             if (allowedToUseCommands.includes(user["display-name"])) {
-                sayInChat('resigning the game...')
+                sayInChat('resigning the game...');
                 resign();
             }
         }
@@ -115,8 +149,6 @@ try {
 
                 challengeon = false;
 
-
-
                 var yes = message.slice(0, 12);
                 if (yes == '!challengeme') {
                     var lichessusername = message.slice(13, message.length);
@@ -144,21 +176,11 @@ try {
         }
 
 
-
-
         if (message == '!seek') {
             if (allowedToUseCommands.includes(user["display-name"])) {
                 SeekGame();
             }
         }
-
-
-
-        // if (message == '!challenge') {
-        //     if (user["display-name"] == 'xSplasher' || user["display-name"] == 'ChatPlaysChess_TV') {
-        //         Challenge('just_a_nobody');
-        //     }
-        // }
 
 
         if (message == '!cont') {
@@ -187,31 +209,12 @@ try {
             if (allowedToUseCommands.includes(user["display-name"])) {
                 PlayVsBot();
             }
-
-            //setTimeout(client.action,6000,'xsplasher','bot game created, game id is: '+thegameid);
-
         }
 
         if (message == "!showgameid") {
             sayInChat('game id is: ' + thegameid+' || link is: https://lichess.org/'+thegameid);
         }
 
-        // if (message == "!state") {
-
-        //     axios.get('/api/board/game/stream/' + thegameid, {
-        //         baseURL: 'https://lichess.org/',
-        //         headers: {
-        //             'Authorization': 'Bearer ' + personalToken
-        //         },
-        //         params: {
-        //             nb: 1
-        //         },
-        //     }).then(function(response) {
-
-        //         console.log(response.data['state']['status']);
-
-        //     });
-        // }
 
         if (message.includes("!")) { // handle move commands
 
@@ -239,19 +242,10 @@ try {
                             votes[ourmove] = 1;
                         }
 
-
-
-
-                        //votes.push(ourmove); // pushing the vote to list
                         wrongMove = false;
 
                         sayInChat(user["display-name"] + ' voted for ' + ourmove);
                     }
-
-
-
-                    //makemove(themessage);
-
 
 
                 } else {
@@ -261,25 +255,13 @@ try {
             }
         }
 
-        // if (message == '!poll') {
-        //     isPollOn = true;
-        //     sayInChat('Poll started: 10 seconds');
-        //     setTimeout(tellmethevote, 10000);
-        //     //tellmethevote();
-        // }
 
-        // if (message == '!fpoll') {
-        //     isPollOn = false;
-        //     sayInChat('Poll ended');
-        // }
 
     });
 } catch (err) {
     console.log("ERROR: Move cant be played Outside");
 }
 
-
-//https://lichess.org/api/board/game/stream/{gameId}
 
 
 
@@ -307,6 +289,20 @@ function makemove(themove) {
                     moveswhite = moveswhite + 4;
                 }
                 isMoveBeingPlayed = false;
+
+                if (isCalledFromForcedMove) {
+
+                    clearTimeout(turnTimer);
+                    // reseting turn variables
+                    isPollOn = false;
+                    votes = {};
+                    votersname = [];
+                    listofdoubles = [];
+                    howmanytimes = 0;
+
+                    isCalledFromForcedMove = false;
+                }
+
             }).catch(function() {
                 isPollOn = true;
 
@@ -316,8 +312,14 @@ function makemove(themove) {
                 }
 
                 if (!nomoves) {
-                    sayInChat("That's an illegal Move, Let's make a correct move. "+turnTime / 1000+" seconds.");
-                    setTimeout(tellmethevote, turnTime);
+                    if (isCalledFromForcedMove) {
+                        sayInChat("That's an illegal Move.");
+                        isCalledFromForcedMove = false;
+                    }
+                    else{
+                        sayInChat("That's an illegal Move, Let's make a correct move. "+turnTime / 1000+" seconds.");
+                        turnTimer = setTimeout(tellmethevote, turnTime);   
+                    }                                     
                 }
 
                 if (nomoves && attempts < attemptsToPlay) {
@@ -327,24 +329,17 @@ function makemove(themove) {
                 	}
                     
                     nomoves = false;
-                    setTimeout(tellmethevote, turnTime);
+                    turnTimer = setTimeout(tellmethevote, turnTime);
                 }
 
             });
-
-            //client.action('xsplasher', 'this bicth has it');
+         
         } catch (err) {
             console.log("ERROR: Move cant be played");
 
         }
     }
 
-    // else {
-    //     console.log("cant play the move because it's wrong");
-    //     isPollOn = true;
-    //     sayInChat("Let's make a correct move: ");
-    //     setTimeout(tellmethevote, 15000);
-    // }
 }
 
 
@@ -362,7 +357,6 @@ function getongoinggameID() {
         },
     }).then(function(response) {
         thegameid = response.data['nowPlaying'][0]["fullId"];
-        //console.log(response.data['nowPlaying']);
         getcolor();
         if (!isgamecreatedcalled) {
             console.log('on going game: ' + thegameid);
@@ -472,7 +466,7 @@ function tellmethevote() {
             sayInChat('No votes were submited.');
             nomoves = true;
         }
-        //thevotedmove = votes[0];
+
         makemove(xad);
         votes = {};
         votersname = [];
@@ -510,7 +504,6 @@ function PlayVsBot(lvl = 8, color = "random", clock = none, incr = 15) {
             isPlaying = true;
             getongoinggameID();
             console.log("game created");
-            //sayInChat('bot game created, game id is: '+thegameid);
         }).then(function() {
             console.log('it worked');
         })
@@ -571,7 +564,6 @@ function getcolor() {
     }, 2100);
 }
 
-//PlayVsBot(3,"black");
 
 var gameStateChecker = setInterval(function() {
     if (thegameid != '' && isPlaying) {
@@ -582,7 +574,6 @@ var gameStateChecker = setInterval(function() {
             }
         }).then(function(response) {
 
-            //console.log('i was here');
             if (typeof response.data['state'] !== 'undefined' && typeof response.data['state'] != 'undefined' && typeof response.data['state']['status'] !== 'undefined' && typeof response.data['state']['status'] != 'undefined' && response.data['state']['status'] != 'started') { // if game ended
 
                 if (response.data['state']['status'] == 'resign') {
@@ -609,12 +600,10 @@ var gameStateChecker = setInterval(function() {
             if (isPlaying && !isMoveBeingPlayed && thegameid != '' && color != '' && typeof response.data['state'] !== 'undefined' && typeof response.data['state'] != 'undefined' && response.data['state']['status'] == 'started') {
                 var x = response.data['state']['moves'].replace(/\s/g, '').length;
 
-                //console.log('i was in turn');
-
                 if (color == 'white' && !isMoveBeingPlayed) { // playing as white
                     if (x % 8 == 0) {
-                        if ((x > moveswhite || moveswhite == '0') && !isPollOn) {
-                            //console.log('in white'); // if it's our turn to move
+                        if ((x > moveswhite || moveswhite == '0') && !isPollOn) { // if it's our turn to move
+                            
                             moveswhite = x;
                             if (x < 56 ) { // from 1st to 7th move
                             	turnTime = 30000; // 30seconds
@@ -632,14 +621,10 @@ var gameStateChecker = setInterval(function() {
                             	turnTime = 75000;
                             }
 
-
-
-                            
-                            //console.log(x);
                             isMoveBeingPlayed = true;
                             isPollOn = true;                            
                             sayInChat("MAKE MOVES IN CHAT: (e.g: !e2e4) "+turnTime / 1000+" seconds.");
-                            setTimeout(tellmethevote, turnTime);
+                            turnTimer = setTimeout(tellmethevote, turnTime);
 
                         }
                     }
@@ -647,8 +632,8 @@ var gameStateChecker = setInterval(function() {
 
                 if (color == 'black' && !isMoveBeingPlayed) {
                     if (x % 4 == 0) {
-                        if (x > movesblack && !isPollOn && x > 3) {
-                            //console.log('in black'); // if it's our turn to move
+                        if (x > movesblack && !isPollOn && x > 3) { // if it's our turn to move
+                            
                             movesblack = x;
 
                             if (x < 56 ) { // 7th move
@@ -666,14 +651,11 @@ var gameStateChecker = setInterval(function() {
                             if (x > 160) {
                             	turnTime = 75000;
                             }
-
-
                             
-                            //console.log(x);
                             isMoveBeingPlayed = true;
                             isPollOn = true;
                             sayInChat("MAKE MOVES IN CHAT: (e.g: !e2e4) "+turnTime / 1000+" seconds.");
-                            setTimeout(tellmethevote, turnTime);
+                            turnTimer = setTimeout(tellmethevote, turnTime);
 
                         }
                     }
@@ -713,12 +695,8 @@ function Challenge(username, twitchusername, rated = false, clock = 2400, incr =
             // Do something
             justStarted = true;
             isColorSet = false;
-            sayInChat('sending challenge to ' + username + ' submitted by ' + twitchusername);
-            //getongoinggameID();
-            //console.log("game created");
-            //sayInChat('bot game created, game id is: '+thegameid);
+            sayInChat('sending challenge to ' + username + ' submitted by ' + twitchusername);            
         }).then(function() {
-            //console.log('it worked');
             isCalledFromChallenge = true;
             setTimeout(getongoinggameID, 13000);
         })
@@ -747,12 +725,8 @@ function SeekGame(rated = false, timeinMinutes = 10, incr = 15, playercolor = 'r
         .then((result) => {
             // Do something
             justStarted = true;
-            isPlaying = true;
-            //getongoinggameID();
-            //console.log("game created");
-            //sayInChat('bot game created, game id is: '+thegameid);
+            isPlaying = true;            
         }).then(function() {
-            //console.log('it worked');
             getongoinggameID();
         })
         .catch(err => console.warn(err));
@@ -795,26 +769,3 @@ function resign() {
 
 
 }
-
-
-//just_a_nobody
-
-// var toPlayAMove = setInterval(function () {
-
-//     if (isPlaying && thegameId != '' && color != '') {
-//         if (color == 'white') {
-//         	if (moves == '' && justStarted) {
-//         		justStarted = false;
-//         		//ask chat to play a move
-
-//         		sayInChat('time to vote for moves');
-//         		isPollOn = true;
-//         		// modify vote handler command
-
-//         	}
-
-
-
-//         }
-//     }
-// }, 2100);
