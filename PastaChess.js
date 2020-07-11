@@ -468,7 +468,7 @@ function tellmethevote() {
         }
 
         makemove(xad);
-        votes = {};
+        votes = [];
         votersname = [];
         listofdoubles = [];
         howmanytimes = 0;
