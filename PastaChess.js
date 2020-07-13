@@ -23,15 +23,10 @@ var allowedToUseCommands = ['xSplasher', 'ChatPlaysChess_TV']; // Users allowed 
 var streamer = 'xSplasher'; // what channel you want the bot to join
 
 
-var OAuthToken = 'oauth:PUT_YOUR_AUTH_KEY_HERE'; // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
+var OAuthToken = 'oauth:PUT_YOUR_AUTH_KEY_HERE'// Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
 
 
-const personalToken = 'YOUR_LICHESS_TOKEN'; // lichess token (ChatPlaysChess)
-
-
-
-
-
+const personalToken = 'YOUR_LICHESS_TOKEN '; // lichess token (ChatPlaysChess)
 
 
 
@@ -65,6 +60,28 @@ var isPlaying = false;
 var justStarted = false;
 var challengeon = false;
 
+
+var app = require('express')();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname +'/index.html');
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    /*socket.on('message', (s) => {
+        io.emit('msg_received',s+' BACK');
+    });*/
+});
+
+http.listen(7777, () => {
+  console.log('listening on *:7777');
+});
+
+
 var votes = {};
 var votersname = [];
 
@@ -82,7 +99,7 @@ const options = {
     },
     identity: {
         username: 'BOT',
-        password: OAuthToken,
+        password: OAuthToken, // Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
     },
     channels: [streamer],
 };
@@ -176,7 +193,7 @@ try {
                     }).then(function(response) {
 
                         if (typeof response.data['id'] !== 'undefined' && typeof response.data['id'] != 'undefined' && typeof response.data !== 'undefined' && typeof response.data != 'undefined' && response.data['id'] != '') {
-                            console.log(response.data['id']);
+                            //console.log(response.data['id']);   
                             Challenge(lichessusername, user["display-name"]);
                         }
 
@@ -242,7 +259,7 @@ try {
                     }
 
 
-                    if (!votersname.includes(user["display-name"])) {
+                    if (( !votersname.includes(user["display-name"])  )) { //TO BE REMOVED
                         var ourmove = message.substr(1);
 
                         votersname.push(user["display-name"]);
@@ -250,10 +267,12 @@ try {
 
                         if (ourmove in votes) { // if move exists already in votes
                             votes[ourmove]++;
+                            io.emit('existing_move',votes);
                         }
 
                         if (!(ourmove in votes)) { // if move DO NOT exist
                             votes[ourmove] = 1;
+                            io.emit('new_move',votes);
                         }
 
 
@@ -292,6 +311,9 @@ function makemove(themove) {
             ).then(function(response) {
                 console.log('Move: ' + themove + ' is Played!');
                 sayInChat('Move: ' + themove + ' is Played!');
+
+                io.emit('move_made',themove);
+
                 if (color == 'black') {
                     movesblack = movesblack + 4;
                 }
@@ -322,7 +344,10 @@ function makemove(themove) {
                     resign();
                 }
 
-                if (!nomoves) {
+                if (!nomoves) { // if move is illegal
+
+                    io.emit('illegal_move_made', turnTime);
+
                     if (isCalledFromForcedMove) {
                         sayInChat("That's an illegal Move.");
                         isCalledFromForcedMove = false;
@@ -333,11 +358,14 @@ function makemove(themove) {
                     }                                     
                 }
 
-                if (nomoves && attempts < attemptsToPlay) {
+                if (nomoves && attempts < attemptsToPlay) { // if there's no moves
 
-                	if (!isPlayingBot) {
-                		sayInChat(attemptsToPlay - attempts + " attempt(s) left before resigning the game. "+turnTime / 1000+" seconds.")
-                	}
+                    var theAttemptsLeft = attemptsToPlay - attempts;
+
+                	io.emit('no_moves_submitted', turnTime,theAttemptsLeft);
+
+                	sayInChat(theAttemptsLeft + " attempt(s) left before resigning the game. "+turnTime / 1000+" seconds.")
+                	
                     
                     nomoves = false;
                     turnTimer = setTimeout(tellmethevote, turnTime);
@@ -378,6 +406,10 @@ function getongoinggameID() {
         }
 
         if (isCalledFromChallenge && thegameid != '') {
+            votes = {};
+            votersname = [];
+            listofdoubles = [];
+            howmanytimes = 0;
             sayInChat('Challenge Accepted !');
         }
 
@@ -410,6 +442,10 @@ function getongoinggameID() {
                                 isCalledFromCont = false;
                                 isPlaying = true;
                                 clearInterval(tocheckthemove);
+                                votes = {};
+                                votersname = [];
+                                listofdoubles = [];
+                                howmanytimes = 0;
                             }
                         }).catch(function(err) {
                         	console.log('ERROR from getongoinggameID => isMyTurn Interval !!!!!!!!!!!!!!!!!!!!');
@@ -602,6 +638,8 @@ var gameStateChecker = setInterval(function() {
                         challengeon = true;
                     }
 
+                    io.emit('game_ended');
+
                     console.log('game ended bruh');
                     sayInChat('Game Ended !');
 
@@ -633,7 +671,10 @@ var gameStateChecker = setInterval(function() {
                             }
 
                             isMoveBeingPlayed = true;
-                            isPollOn = true;                            
+                            isPollOn = true;
+
+                            io.emit('our_turn',turnTime);
+
                             sayInChat("MAKE MOVES IN CHAT: (e.g: !e2e4) "+turnTime / 1000+" seconds.");
                             turnTimer = setTimeout(tellmethevote, turnTime);
 
@@ -665,6 +706,9 @@ var gameStateChecker = setInterval(function() {
                             
                             isMoveBeingPlayed = true;
                             isPollOn = true;
+
+                            io.emit('our_turn',turnTime);
+
                             sayInChat("MAKE MOVES IN CHAT: (e.g: !e2e4) "+turnTime / 1000+" seconds.");
                             turnTimer = setTimeout(tellmethevote, turnTime);
 
@@ -682,7 +726,7 @@ var gameStateChecker = setInterval(function() {
 
 }, 2100);
 
-function Challenge(username, twitchusername, rated = false, clock = 2400, incr = 15, playercolor = 'random') {
+function Challenge(username, twitchusername, rated = false, clock = 6000, incr = 15, playercolor = 'random') {
 
 
     isPlaying = true;
@@ -708,6 +752,7 @@ function Challenge(username, twitchusername, rated = false, clock = 2400, incr =
             isColorSet = false;
             sayInChat('sending challenge to ' + username + ' submitted by ' + twitchusername);            
         }).then(function() {
+
             isCalledFromChallenge = true;
             setTimeout(getongoinggameID, 13000);
         })
@@ -759,6 +804,7 @@ function resign() {
             .then((result) => {
                 // Do something            
             }).then(function() {
+                io.emit('game_ended');
                 sayInChat('game resigned.');
                 isColorSet = false;
                 isCalledFromChallenge = false;
@@ -768,7 +814,7 @@ function resign() {
                 thegameid = '';
                 moveswhite = 0;
                 movesblack = 0;
-                isPlayingBot = false;
+                isPlayingBot = false;                
             })
             .catch(err => console.warn(err));
     }
