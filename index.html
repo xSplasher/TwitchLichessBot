@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>YO</title>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   </head>
+   <body style="background-color:black;color:white;font-family: Arial, Helvetica, sans-serif;">
+
+   	  <p id="gameStatus" style="font-size:33px;"></p>
+
+      <p id="turnTimeShow" style="margin-left:120px;font-size:27px;"></p>
+      
+      <p id="moveplayed" style="margin-left:21px;font-size:18px;"></p>
+
+      <ul id="thelist" style="margin-left:-36px; font-size:36px; list-style-type: none;">
+      	
+      </ul>
+
+      
+      
+
+      <script>
+      	var sortedNewMoves = {};
+
+      	var didGameEnd = false;
+
+         function sort_object(obj) {
+            items = Object.keys(obj).map(function(key) {
+                return [key, obj[key]];
+            });
+            items.sort(function(first, second) {
+                return second[1] - first[1];
+            });
+            sorted_obj={}
+            $.each(items, function(k, v) {
+                use_key = v[0]
+                use_value = v[1]
+                sorted_obj[use_key] = use_value
+            })
+            return(sorted_obj)
+         } 
+         
+
+         function cleaningText() {
+         	$("#turnTimeShow").empty();
+         	$("#gameStatus").empty();
+         	$("#moveplayed").empty();
+         	$("#thelist").empty();
+         }
+         
+         var socket = io();         
+         
+         socket.on('new_move', function (thenewmove) {
+
+         	sortedNewMoves = sort_object(thenewmove);
+         	$("#thelist").empty();
+         	$.each(sortedNewMoves,(move, value) => {
+         		$("#thelist").append("<li>"+ move +" &nbsp;&nbsp;"+ value +"</li>");
+         	});
+
+         	sortedNewMoves = {};         
+         
+         });
+         
+         socket.on('existing_move', function (theexistingmove) {
+         	
+           sortedNewMoves = sort_object(theexistingmove);
+           $("#thelist").empty();
+           $.each(sortedNewMoves,(move, value) => {
+         		$("#thelist").append("<li>"+ move +" &nbsp;&nbsp;"+ value +"</li>");
+         	});
+
+           sortedNewMoves = {};
+         
+         });
+
+
+
+         socket.on('move_made', function (moveplayed) {
+         	cleaningText();
+         	$("#gameStatus").text("Move "+ moveplayed + " was played !");
+         });
+
+
+
+         socket.on('our_turn', function (turnTime) {
+         	cleaningText();
+         	//var start = new Date;
+
+         	$("#gameStatus").append('Make MOVES in chat: (e.g: !g1f3)');
+
+         	var timeIcr = 0;
+
+			var theinterval = setInterval(function() {
+				timeIcr++;
+			    $('#turnTimeShow').text( (Math.round(turnTime) / 1000) - timeIcr + " seconds" );
+			    
+			    if (didGameEnd) {			    	
+				    $('#turnTimeShow').empty();
+				    clearInterval(theinterval);
+				    didGameEnd = false;
+			    	
+			    }
+
+			    if (timeIcr * 1000 >= turnTime) {
+				    $('#turnTimeShow').empty();
+				    clearInterval(theinterval);				    	
+			    }
+			    
+			}, 1000);
+         });
+
+
+
+         socket.on('game_ended', function (argument) {
+         	didGameEnd = true;
+         	cleaningText();
+         	$("#gameStatus").append('Game Over.');
+         });
+
+
+
+
+         socket.on('illegal_move_made', function (turnTime) {
+         	cleaningText();
+
+         	$("#gameStatus").append("That's an illegal Move. <br/> Let's make a correct move.");
+
+         	var timeIcr = 0;
+
+			var theinterval = setInterval(function() {
+				timeIcr++;
+			    $('#turnTimeShow').text( (Math.round(turnTime) / 1000) - timeIcr + " seconds" );
+			    
+			    if (didGameEnd) {			    	
+				    $('#turnTimeShow').empty();
+				    clearInterval(theinterval);
+				    didGameEnd = false;
+			    	
+			    }
+
+			    if (timeIcr * 1000 >= turnTime) {
+				    $('#turnTimeShow').empty();
+				    clearInterval(theinterval);				    	
+			    }
+
+			}, 1000);
+         });
+
+         socket.on('no_moves_submitted', function (turnTime, attempts) {
+         	cleaningText();
+
+         	$("#gameStatus").append('No Moves. <br/> '+attempts+' attempt(s) left before resigning the game.');
+
+         	var timeIcr = 0;
+
+			var theinterval = setInterval(function() {
+				timeIcr++;
+			    $('#turnTimeShow').text( (Math.round(turnTime) / 1000) - timeIcr + " seconds" );
+
+			    if (didGameEnd) {			    	
+				    $('#turnTimeShow').empty();
+				    clearInterval(theinterval);
+				    didGameEnd = false;
+			    	
+			    }
+
+			    if (timeIcr * 1000 >= turnTime) {
+				    $('#turnTimeShow').empty();
+				    clearInterval(theinterval);				    	
+			    }
+			}, 1000);
+         });
+         
+      </script>
+   </body>
+</html>
+
