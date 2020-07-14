@@ -119,6 +119,7 @@ try {
             if (allowedToUseCommands.includes(user["display-name"])) {
                 if (message.length == 10) {
                     if (isMoveBeingPlayed) {
+			io.emit('poll_closed');
                         sayInChat('Poll closed!');
                         clearTimeout(turnTimer);
                         tellmethevote();
