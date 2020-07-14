@@ -19,7 +19,7 @@ First you need to install some stuff to make it work:
    - install axios request library
      ``` npm install axios ```
      
-   - install express web framework library  
+   - install express web framework library
      ``` npm install express ```
      
    - install socket websockets library
