@@ -112,3 +112,10 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 - __```!move e1e2``` Forces a move to be played.__
 
 - __```!closepoll``` immediately closes the poll and plays the most voted move.__
+
+
+## Want to show moves on stream ?
+
+after you start the bot, open obs in your 'Sources' add a 'Browser' and put ``` http://localhost:7777/ ``` as the URL.
+
+it will start showing moves when it's chat's turn to move.
