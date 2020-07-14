@@ -98,7 +98,7 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
     
 
 
-- __```!seek``` Make chat play against a random person on Lichess (Not heavily tested)__
+- __```!seek``` Make chat play a casual game against a random person on Lichess (Not heavily tested)__
   - if you want to change the game settings, like time control etc, check the function named ```SeekGame```:
     - Same as Challenge function except; Clock: change ```timeinMinutes``` variable to the desired value in minutes.
     
@@ -114,7 +114,7 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 - __```!closepoll``` immediately closes the poll and plays the most voted move.__
 
 
-## Want to show moves on stream ?
+## Want to show the voted moves on stream ?
 
 after you start the bot, open obs in your 'Sources' add a 'Browser' and put ``` http://localhost:7777/ ``` as the URL.
 
