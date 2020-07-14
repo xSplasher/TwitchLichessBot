@@ -17,8 +17,13 @@ First you need to install some stuff to make it work:
      ``` npm install tmi.js ```
 
    - install axios request library
-     ``` npm install axios ``` 
+     ``` npm install axios ```
      
+   - install express web framework library  
+     ``` npm install express ```
+     
+   - install socket websockets library
+     ``` npm install socket.io ```
 
 
 
