@@ -22,7 +22,7 @@ First you need to install some stuff to make it work:
    - install express web framework library
      ``` npm install express ```
      
-   - install socket websockets library
+   - install socket.io websockets library
      ``` npm install socket.io ```
 
 
