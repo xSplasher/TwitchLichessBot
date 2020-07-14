@@ -23,6 +23,8 @@
       <script>
       	var sortedNewMoves = {};
 
+        var theinterval;
+
       	var didGameEnd = false;
 
          function sort_object(obj) {
@@ -79,6 +81,7 @@
 
          socket.on('move_made', function (moveplayed) {
          	cleaningText();
+          clearInterval(theinterval);
          	$("#gameStatus").text("Move "+ moveplayed + " was played !");
          });
 
@@ -92,7 +95,7 @@
 
          	var timeIcr = 0;
 
-			var theinterval = setInterval(function() {
+			 theinterval = setInterval(function() {
 				timeIcr++;
 			    $('#turnTimeShow').text( (Math.round(turnTime) / 1000) - timeIcr + " seconds" );
 			    
@@ -129,7 +132,7 @@
 
          	var timeIcr = 0;
 
-			var theinterval = setInterval(function() {
+			theinterval = setInterval(function() {
 				timeIcr++;
 			    $('#turnTimeShow').text( (Math.round(turnTime) / 1000) - timeIcr + " seconds" );
 			    
@@ -155,7 +158,7 @@
 
          	var timeIcr = 0;
 
-			var theinterval = setInterval(function() {
+			 theinterval = setInterval(function() {
 				timeIcr++;
 			    $('#turnTimeShow').text( (Math.round(turnTime) / 1000) - timeIcr + " seconds" );
 
@@ -176,4 +179,3 @@
       </script>
    </body>
 </html>
-
