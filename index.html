@@ -87,6 +87,12 @@
 
 
 
+          socket.on('poll_closed', function (argument) {
+            clearInterval(theinterval);
+          });
+
+
+
          socket.on('our_turn', function (turnTime) {
          	cleaningText();
          	//var start = new Date;
@@ -179,3 +185,4 @@
       </script>
    </body>
 </html>
+
