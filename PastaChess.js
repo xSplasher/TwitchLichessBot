@@ -260,8 +260,10 @@ try {
                     }
 
 
-                    if (( !votersname.includes(user["display-name"])  )) { //TO BE REMOVED
+                    if (( !votersname.includes(user["display-name"])  )) {
                         var ourmove = message.substr(1);
+			    
+			ourmove = ourmove.toLowerCase();
 
                         votersname.push(user["display-name"]);
 
