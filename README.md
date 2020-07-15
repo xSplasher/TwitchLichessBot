@@ -118,4 +118,6 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 
 after you start the bot, open obs in your 'Sources' add a 'Browser' and put ``` http://localhost:7777/ ``` as the URL.
 
+make sure ``` index.html ``` is in the same directory as ``` PastaChess.js ``` file.
+
 it will start showing moves when it's chat's turn to move.
