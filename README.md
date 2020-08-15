@@ -72,7 +72,7 @@ to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
 
 ### More Details
 
-- __```!e2e4``` is how you vote, want to move the knight on g1 to f3 ? type ```!g1f3``` castle king side as white ? ```!e1g1```__
+- __```e2e4``` is how you vote, want to move the knight on g1 to f3 ? type ```g1f3``` castle king side as white ? ```e1g1```__
   - accessible by chat only when it's chat's turn to play
 
 - __```!challon``` Make Challenge On__
