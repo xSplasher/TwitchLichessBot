@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>YO</title>
+      <title>Show Moves</title>
       <script src="/socket.io/socket.io.js"></script>
       <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
    </head>
@@ -54,7 +54,7 @@
          var socket = io();         
          
          socket.on('new_move', function (thenewmove) {
-
+          console.log('NEW MOVE DETECTED');
          	sortedNewMoves = sort_object(thenewmove);
          	$("#thelist").empty();
          	$.each(sortedNewMoves,(move, value) => {
@@ -97,7 +97,7 @@
          	cleaningText();
          	//var start = new Date;
 
-         	$("#gameStatus").append('Make MOVES in chat: (e.g: !g1f3)');
+         	$("#gameStatus").append('Make MOVES in chat: (e.g: g1f3)');
 
          	var timeIcr = 0;
 
@@ -125,6 +125,7 @@
          socket.on('game_ended', function (argument) {
          	didGameEnd = true;
          	cleaningText();
+          clearInterval(theinterval);
          	$("#gameStatus").append('Game Over.');
          });
 
@@ -133,6 +134,7 @@
 
          socket.on('illegal_move_made', function (turnTime) {
          	cleaningText();
+          clearInterval(theinterval);
 
          	$("#gameStatus").append("That's an illegal Move. <br/> Let's make a correct move.");
 
@@ -159,6 +161,7 @@
 
          socket.on('no_moves_submitted', function (turnTime, attempts) {
          	cleaningText();
+          clearInterval(theinterval);
 
          	$("#gameStatus").append('No Moves. <br/> '+attempts+' attempt(s) left before resigning the game.');
 
