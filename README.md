@@ -67,7 +67,7 @@ if everything works fine, you'll see ```Bot is Connected``` in your chat. otherw
 
 in chat type ```!challon``` then ```!challengeme LichessUsernameToBeChallenged``` the challenged player has 10-13 seconds to accept the challenge. 
 
-to vote for moves type ```!a1a8``` or ```!c1f4``` in chat, squares only.
+to vote for moves type ```a1a8``` or ```c1f4``` in chat, squares only.
 
 
 ### More Details
