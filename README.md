@@ -49,7 +49,7 @@ First you need to install some stuff to make it work:
 
 
 4. We need to tell the bot which channel it should join. to do that:
-   - search for a variable named ```streamer``` and replace its value with the desired twitch channel
+   - search for a variable named ```channelsToJoin``` and replace its value with the desired twitch channel
 
 5. We need to tell the bot who can use the commands (should be you and/or the mods). to do that:
    - search for an array named ```allowedToUseCommands``` and add twitch usernames of the people who can use the commands. these people are going to be able to create a game or resign it, you should put your twitch username here and your mods, no more, unless you want chaos.
