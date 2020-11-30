@@ -324,7 +324,7 @@ try {
 
 
             } else {
-                sayInChat('error');
+                //sayInChat('error');
             }
         }
 
@@ -823,7 +823,7 @@ var gameStateChecker = setInterval(function() {
                     
                                     io.emit('our_turn',turnTime);
                     
-                                    sayInChat("MAKE MOVES IN CHAT: (e.g: !e2e4) "+turnTime / 1000+" seconds.");
+                                    sayInChat("MAKE MOVES IN CHAT: (e.g: e2e4) "+turnTime / 1000+" seconds.");
                                     turnTimer = setTimeout(tellmethevote, turnTime);
                     
                                 }
