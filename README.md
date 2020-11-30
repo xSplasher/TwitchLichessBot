@@ -40,7 +40,6 @@ First you need to install some stuff to make it work:
          - Read preferences
          - Create, accept, decline challenges
          - Play games with the board API
-         - Play games with the bot API
 
     3. Go to the PastaChess.js file and replace:
        - ```YOUR_LICHESS_TOKEN``` with your Lichess token
@@ -112,6 +111,10 @@ to vote for moves type ```a1a8``` or ```c1f4``` in chat, squares only.
 - __```!move e1e2``` Forces a move to be played.__
 
 - __```!closepoll``` immediately closes the poll and plays the most voted move.__
+
+- __```!jail TwitchUserName``` after executing this command, the bot will start rejecting ```TwitchUserName```'s votes. (if somebody is trolling, use this command to jail them)__
+
+- __```!free TwitchUserName``` the bot will start accepting ```TwitchUserName```'s votes.__
 
 
 ## Want to show the voted moves on stream ?
