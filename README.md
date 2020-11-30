@@ -81,21 +81,12 @@ to vote for moves type ```a1a8``` or ```c1f4``` in chat, squares only.
 
 - __```!challengeme LichessUsernameToBeChallenged``` Make chat play a casual game against someone on Lichess__
   - requires executing ```!challon``` to work
-  - accessible by chat if ```!challon``` was executed, so someone in chat can submit a challenge.
-  - the challenged player has 10-13 seconds to accept the challenge otherwise you have to type !challon again and execute !challengeme
+  - the challenged player has 10-13 seconds to accept the challenge
   - if you want to change the game settings, like time control etc, check the function named ```Challenge```:
     - Clock: change ```clock``` variable to the desired value in seconds.
     - Color: change ```playercolor``` variable to ```white``` ```black``` or ```random```
     - Increment: change ```icr``` variable to the desired value in seconds.
     - Game Type: change ```rated``` variable to ```true``` to play a Rated game, or ```false``` for a Casual one (IMPORTANT: i do NOT recommand you to play a rated game, your account could be banned, please keep this variable always ```false``` unless you're willing to take the risk of getting banned).
-
-- __```!createbotgame``` Make chat play a game against Stockfish__
-  - if you want to change the AI game setting, check the function named ```PlayVsBot```:
-    - Level: change ```lvl``` variable: 1-8 from easiest to hardest.
-    - Color: change ```color``` variable to ```white``` ```black``` or ```random```
-    - Increment: change ```icr``` variable to the desired value in seconds.
-    
-
 
 - __```!seek``` Make chat play a casual game against a random person on Lichess (Not heavily tested)__
   - if you want to change the game settings, like time control etc, check the function named ```SeekGame```:
@@ -104,9 +95,6 @@ to vote for moves type ```a1a8``` or ```c1f4``` in chat, squares only.
 - __```!resign``` Resign the game currently playing__
    
 - __```!cont``` to Continue a game already playing (if you stopped the bot in the middle of the game and want to continue)__
-
-- __```!showgameid``` Shows game id and link to spectate the game.__
-  - accessible by chat
   
 - __```!move e1e2``` Forces a move to be played.__
 
@@ -121,6 +109,6 @@ to vote for moves type ```a1a8``` or ```c1f4``` in chat, squares only.
 
 after you start the bot, open obs in your 'Sources' add a 'Browser' and put ``` http://localhost:7777/ ``` as the URL.
 
-make sure ``` index.html ``` is in the same directory as ``` PastaChess.js ``` file.
+make sure ``` index.html ``` is in the same directory as ```ChatPlaysChess.js``` file.
 
 it will start showing moves when it's chat's turn to move.
