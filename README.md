@@ -41,7 +41,7 @@ First you need to install some stuff to make it work:
          - Create, accept, decline challenges
          - Play games with the board API
 
-    3. Go to the PastaChess.js file and replace:
+    3. Go to the ```ChatPlaysChess.js``` file and replace:
        - ```YOUR_LICHESS_TOKEN``` with your Lichess token
        - ```oauth:PUT_YOUR_AUTH_KEY_HERE``` with your Twitch OAuth token, make sure to include the ```oauth:```
 
