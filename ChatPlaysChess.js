@@ -16,13 +16,13 @@ const qs = require('querystring'); // translating strings in request
 var allowedToUseCommands = ['xSplasher','ChatPlaysChess_TV']; // Users allowed to use Commands (case sensitive)
 
 
-var channelsToJoin = ['xSplasher']; // what channel you want the bot to join, you can as many as you want in this list.
+var channelsToJoin = ['xSplasher']; // what channel you want the bot to join, you can put as many as you want in this list.
 
 
 var OAuthToken = 'oauth:PUT_YOUR_AUTH_KEY_HERE'// Put your twitch token here, to get one visit: https://twitchapps.com/tmi/
 
 
-var personalToken = 'YOUR_LICHESS_TOKEN '; // lichess token (ChatPlaysChess)
+var personalToken = 'YOUR_LICHESS_TOKEN '; // lichess token
 
 
 
@@ -1000,7 +1000,3 @@ function resign() {
 
 
 }
-
-// i made this project to prove to myself that i can make anything i can imagine knowing only the language's basics with my best friend, google.
-// spent 30mins learning how to do loops, if statement in javasript and how to start a basic http server with express. 
-// it took ~60hours to make this from scratch.
