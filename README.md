@@ -34,7 +34,7 @@ First you need to install some stuff to make it work:
        
        (**DO NOT SHARE THIS TOKEN**)
 
-    2. Lichess account that the chat will play on (i recommand that you create a new account)
+    2. Lichess account that the chat will play on (i recommend that you create a new account)
        - we need a personal token to give the bot permission to use the Lichess account, get the token from [here](https://lichess.org/account/oauth/token)
        - create a new personal token and these are the permissions you should give it:
          - Read preferences
@@ -52,8 +52,6 @@ First you need to install some stuff to make it work:
 
 5. We need to tell the bot who can use the commands (should be you and/or the mods). to do that:
    - search for an array named ```allowedToUseCommands``` and add twitch usernames of the people who can use the commands. these people are going to be able to create a game or resign it, you should put your twitch username here and your mods, no more, unless you want chaos.
-   
-   (**IMPORTANT: usernames are case sensitive: if your twitch username apppears as ```aTwitchUSERNAMELOL``` in chat you should type it the same way in the array. meaning if you instead add ```atwitchusernamelol``` to the array, the bot won't recognize your name).**
 
 
 ## I Did everything above. Now wot ?
