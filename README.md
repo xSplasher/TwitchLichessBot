@@ -58,7 +58,7 @@ First you need to install some stuff to make it work:
 
 Now you can run it by simply typing ```node ChatPlaysChess.js``` in ```cmd``` or however you want.
 
-if everything works fine, you'll see ```Bot is Connected``` in your chat. otherwise, you can whisper me on [Twitch](https://www.twitch.tv/xsplasher) or DM me on discord xSplasher#3998 i'll help you.
+if everything works fine, you'll see ```Bot is Connected``` in your chat, if you just created the lichess account, you'll probably get a token error, in that case just give it some time. any other question you can whisper me on [Twitch](https://www.twitch.tv/xsplasher) or DM me on discord xSplasher#3998 .
 
 ### Quick Start
 
