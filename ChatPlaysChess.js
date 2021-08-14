@@ -646,7 +646,7 @@ function PlayVsBot(lvl = 8, color = "random", clock = 1800, incr = 60) {
         'level': lvl,
         'clock.limit': clock,
         'clock.increment': incr,
-        'days': 12,
+        'days': 10,
         'color': color
     }
 
@@ -895,7 +895,7 @@ function Challenge(username, twitchusername, rated = false, clock = 1800, incr =
         'rated': rated,
         'clock.limit': clock,
         'clock.increment': incr,
-        'days': 12,
+        'days': 10,
         'color': playercolor
     }
 
