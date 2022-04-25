@@ -3,7 +3,7 @@ a twitch bot that gives you the ability to play against your twitch chat on lich
 
 You (the streamer) will be playing on your Lichess account while Chat should be playing on another one.
 
-Chat is going to vote for moves, the most voted move is played by the bot.
+Chat is going to vote for moves in twitch chat, the most voted move is played by the bot.
 
 ## How can i play ?
 First you need to install some stuff to make it work:
@@ -29,7 +29,8 @@ First you need to install some stuff to make it work:
 
 
 3. Now we need to set some variables:
-    1. Twitch account that the bot will use (you can use your main one).
+    1. Twitch account that the bot will use (you can use your main one).   
+       - account will only be used to send messages in chat (should have streamer, mod or vip privilege to avoid "you're sending too many messages quickly" twitch problem) 
        - to give the bot control of your account we need a OAuth token, that you can get from [here](https://twitchapps.com/tmi/) 
        
        (**DO NOT SHARE THIS TOKEN**)
@@ -84,7 +85,7 @@ to vote for moves type ```a1a8``` or ```c1f4``` in chat, squares only.
     - Clock: change ```clock``` variable to the desired value in seconds.
     - Color: change ```playercolor``` variable to ```white``` ```black``` or ```random```
     - Increment: change ```icr``` variable to the desired value in seconds.
-    - Game Type: change ```rated``` variable to ```true``` to play a Rated game, or ```false``` for a Casual one (IMPORTANT: i do NOT recommand you to play a rated game, your account could be banned, please keep this variable always ```false``` unless you're willing to take the risk of getting banned).
+    - Game Type: change ```rated``` variable to ```true``` to play a Rated game, or ```false``` for a Casual one (IMPORTANT: i do NOT recommend you to play a rated game, your account could be banned, please keep this variable always ```false``` unless you're willing to take the risk of getting banned).
 
 - __```!seek``` Make chat play a casual game against a random person on Lichess (Not heavily tested)__
   - if you want to change the game settings, like time control etc, check the function named ```SeekGame```:
