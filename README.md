@@ -5,6 +5,13 @@ You (the streamer) will be playing on your Lichess account while Chat should be 
 
 Chat is going to vote for moves in twitch chat, the most voted move is played by the bot.
 
+## What things can i do with it ?
+ - Twitch channel vs 1 person: 1 bot needed
+ - Twitch channel vs Twitch channel: 2 bots playing against each other (can be the same channel to have chat play against itself)
+ - Many twitch channels vs 1 person: 1 bot needed (read step 4)
+ - Many twitch channels vs 1 Twitch channel: 2 bots playing against each other
+ - Many twitch channels vs Many twitch channels: 2 bots playing against each other
+
 ## How can i play ?
 First you need to install some stuff to make it work:
 
@@ -49,7 +56,8 @@ First you need to install some stuff to make it work:
 
 
 4. We need to tell the bot which channel it should join. to do that:
-   - search for a variable named ```channelsToJoin``` and replace its value with the desired twitch channel
+   - search for an array named ```channelsToJoin``` and replace its value with the desired twitch channel
+   - can be many channels and the bot will join all of them and gather moves from them (multiple twitch channels vs 1 person)
 
 5. We need to tell the bot who can use the commands (should be you and/or the mods). to do that:
    - search for an array named ```allowedToUseCommands``` and add twitch usernames of the people who can use the commands. these people are going to be able to create a game or resign it, you should put your twitch username here and your mods, no more, unless you want chaos.
